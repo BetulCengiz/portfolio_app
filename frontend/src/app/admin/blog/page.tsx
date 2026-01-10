@@ -8,7 +8,7 @@ export default function BlogManagement() {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState<any>(null); // For editing
-    const [formData, setFormData] = useState({ title: '', slug: '', content: '', image_url: '', external_url: '', is_published: false });
+    const [formData, setFormData] = useState({ title: '', title_en: '', slug: '', content: '', content_en: '', image_url: '', external_url: '', is_published: false });
 
     useEffect(() => {
         fetchPosts();
@@ -30,15 +30,17 @@ export default function BlogManagement() {
             setCurrentPost(post);
             setFormData({
                 title: post.title,
+                title_en: post.title_en || '',
                 slug: post.slug,
                 content: post.content,
+                content_en: post.content_en || '',
                 image_url: post.image_url || '',
                 external_url: post.external_url || '',
                 is_published: post.is_published
             });
         } else {
             setCurrentPost(null);
-            setFormData({ title: '', slug: '', content: '', image_url: '', external_url: '', is_published: false });
+            setFormData({ title: '', title_en: '', slug: '', content: '', content_en: '', image_url: '', external_url: '', is_published: false });
         }
         setIsModalOpen(true);
     };
@@ -235,14 +237,25 @@ export default function BlogManagement() {
                                 />
                                 <p className="text-xs text-admin-muted">Eğer burayı doldurursanız, içerik yerine bu linke yönlendirilir.</p>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <label className="text-white font-bold">İçerik (Markdown)</label>
-                                <textarea
-                                    rows={10}
-                                    value={formData.content}
-                                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                    className="bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary font-mono text-sm"
-                                ></textarea>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-white font-bold text-sm">İçerik (TR - Markdown)</label>
+                                    <textarea
+                                        rows={10}
+                                        value={formData.content}
+                                        onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                                        className="bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary font-mono text-xs"
+                                    ></textarea>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-white font-bold text-sm">Content (EN - Markdown)</label>
+                                    <textarea
+                                        rows={10}
+                                        value={formData.content_en}
+                                        onChange={(e) => setFormData({ ...formData, content_en: e.target.value })}
+                                        className="bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary font-mono text-xs"
+                                    ></textarea>
+                                </div>
                             </div>
                             <label className="flex items-center gap-3 cursor-pointer">
                                 <input

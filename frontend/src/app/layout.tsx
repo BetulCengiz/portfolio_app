@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono, Space_Grotesk, Noto_Sans, Roboto_Flex } from "next/font/google";
 import "./globals.css";
+import I18nProvider from "@/components/common/I18nProvider";
+import UmamiAnalytics from "@/components/common/UmamiAnalytics";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -45,7 +47,10 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${notoSans.variable} ${robotoFlex.variable} font-sans bg-background text-foreground overflow-x-hidden relative min-h-screen flex flex-col selection:bg-primary selection:text-white antialiased`}
       >
-        {children}
+        <I18nProvider>
+          {children}
+          <UmamiAnalytics />
+        </I18nProvider>
       </body>
     </html>
   );

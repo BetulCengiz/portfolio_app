@@ -37,7 +37,7 @@ export default async function Home() {
 
       <Navbar />
       <ScrollAnimations />
-      <Hero />
+      <Hero initialData={data.about} />
       <About initialData={data.about} initialTimeline={data.timeline} />
       <Projects initialData={data.projects} />
       <Blog initialData={data.blog} />

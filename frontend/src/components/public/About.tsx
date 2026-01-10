@@ -1,23 +1,32 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { api } from '@/utils/api';
+import { useTranslation } from 'react-i18next';
 
 interface TimelineItem {
     id: number;
     title: string;
+    title_en?: string;
     description: string;
+    description_en?: string;
     year: string;
+    year_en?: string;
     icon: string;
+    company?: string;
+    company_en?: string;
     order: number;
 }
 
 interface AboutData {
     full_name: string;
     title: string;
+    title_en?: string;
     bio: string;
+    bio_en?: string;
     profile_image: string;
     email: string;
     cv_url: string;
+    cv_url_en?: string;
 }
 
 interface AboutProps {
@@ -26,13 +35,12 @@ interface AboutProps {
 }
 
 const About = ({ initialData, initialTimeline }: AboutProps) => {
+    const { t, i18n } = useTranslation();
     const [timeline, setTimeline] = useState<TimelineItem[]>(initialTimeline || []);
     const [aboutData, setAboutData] = useState<AboutData | null>(initialData || null);
     const [loading, setLoading] = useState(!initialData);
 
-
-
-    // About.tsx içindeki useEffect kısmını bu şekilde güncelle:
+    const isEn = i18n.language === 'en';
 
     useEffect(() => {
         if (initialData && initialTimeline && initialTimeline.length > 0) {
@@ -71,14 +79,15 @@ const About = ({ initialData, initialTimeline }: AboutProps) => {
 
 
     if (loading) {
-        return <div className="min-h-screen flex items-center justify-center text-white">Yükleniyor...</div>;
+        return <div className="min-h-screen flex items-center justify-center text-white">{t('common.loading')}</div>;
     }
 
     return (
         <section id="about" className="animate-section relative z-10 w-full min-h-screen py-20 px-6 md:px-20 lg:px-40 flex justify-center overflow-hidden">
             {/* Background Blobs */}
-            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] mix-blend-screen opacity-30 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[100px] mix-blend-screen opacity-20 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0B0E14] via-[#0f1623] to-[#052e33] z-0"></div>
+            <div className="absolute top-10 left-10 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
             <div className="max-w-[1200px] w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 
@@ -93,42 +102,45 @@ const About = ({ initialData, initialTimeline }: AboutProps) => {
                             />
                         </div>
                         <div>
-                            <h3 className="text-primary font-bold tracking-wider text-sm uppercase mb-2">Hikayem</h3>
-                            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                                {aboutData?.full_name || 'İsim Yüklenemedi'} <br />
-                                <span className="text-gradient">{aboutData?.title}</span>
-                            </h1>
-                            <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>
+                            <h3 className="text-primary font-bold tracking-wider text-sm uppercase mb-1">{t('nav.about')}</h3>
+
+                            <div className="h-1 w-20 bg-primary rounded-full mb-1"></div>
                         </div>
                     </div>
 
-                    <div className="glass-panel p-6 rounded-xl text-white/80 leading-relaxed text-lg">
+                    <div className="glass-panel p-3 rounded-xl text-white/80 leading-relaxed text-lg w-[550px]">
                         <p className="font-light whitespace-pre-wrap">
-                            {aboutData?.bio}
+                            {(isEn && aboutData?.bio_en) ? aboutData.bio_en : aboutData?.bio}
                         </p>
                     </div>
 
-                    {/* İstatistikler (Şu an statik, About modeline eklenebilir) */}
+                    {/* İstatistikler */}
                     <div className="grid grid-cols-2 gap-4">
                         <div className="glass-panel p-4 rounded-lg flex flex-col items-center justify-center text-center group hover:border-primary/50 transition-colors duration-300">
                             <span className="text-3xl font-bold text-white group-hover:text-primary transition-colors">5+</span>
-                            <span className="text-sm text-primary/80 font-medium">Yıl Deneyim</span>
+                            <span className="text-sm text-primary/80 font-medium">{t('common.years_experience')}</span>
                         </div>
                         <div className="glass-panel p-4 rounded-lg flex flex-col items-center justify-center text-center group hover:border-primary/50 transition-colors duration-300">
                             <span className="text-3xl font-bold text-white group-hover:text-primary transition-colors">40+</span>
-                            <span className="text-sm text-primary/80 font-medium">Tamamlanan Proje</span>
+                            <span className="text-sm text-primary/80 font-medium">{t('common.completed_projects')}</span>
                         </div>
                     </div>
 
                     <div className="flex flex-wrap gap-4 pt-2">
                         <a href={`mailto:${aboutData?.email}`} className="flex items-center gap-2 bg-white text-background px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.3)]">
                             <span className="material-symbols-outlined">mail</span>
-                            İletişime Geç
+                            {t('hero.contact_me')}
+
                         </a>
-                        {aboutData?.cv_url && (
-                            <a href={aboutData.cv_url} target="_blank" className="flex items-center gap-2 glass-panel hover:bg-white/10 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20">
+                        {((isEn && (aboutData?.cv_url_en || aboutData?.cv_url)) || aboutData?.cv_url) && (
+                            <a
+                                href={(isEn && aboutData?.cv_url_en) ? aboutData.cv_url_en : aboutData?.cv_url}
+                                target="_blank"
+                                className="flex items-center gap-2 glass-panel hover:bg-white/10 text-white px-6 py-3 rounded-lg font-medium transition-colors border border-white/20"
+                            >
+
                                 <span className="material-symbols-outlined">description</span>
-                                CV İndir
+                                {t('hero.download_cv')}
                             </a>
                         )}
                     </div>
@@ -138,7 +150,7 @@ const About = ({ initialData, initialTimeline }: AboutProps) => {
                 <div className="lg:col-span-7 slide-in-right">
                     <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
                         <span className="material-symbols-outlined text-primary">history_edu</span>
-                        Deneyim & Eğitim
+                        {t('about.experience_education')}
                     </h2>
 
                     <div className="stagger-list relative pl-4 md:pl-8">
@@ -155,13 +167,20 @@ const About = ({ initialData, initialTimeline }: AboutProps) => {
                                 <div className="ml-12 md:ml-20">
                                     <div className="glass-panel p-6 md:p-8 rounded-xl hover:border-primary/40 transition-all duration-300 hover:translate-x-2">
                                         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                                            <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border border-primary/20">
-                                                {item.year}
+                                            <span className="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-medium tracking-wide border border-primary/20">
+                                                {(isEn && item.year_en) ? item.year_en : item.year}
                                             </span>
                                         </div>
-                                        <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
+                                        <h3 className="text-xl font-bold text-white mb-1">
+                                            {(isEn && item.title_en) ? item.title_en : item.title}
+                                        </h3>
+                                        {((isEn && item.company_en) || item.company) && (
+                                            <p className="text-primary font-medium mb-2">
+                                                {(isEn && item.company_en) ? item.company_en : item.company}
+                                            </p>
+                                        )}
                                         <p className="text-white/70 text-sm leading-relaxed mb-4 font-light">
-                                            {item.description}
+                                            {(isEn && item.description_en) ? item.description_en : item.description}
                                         </p>
                                     </div>
                                 </div>

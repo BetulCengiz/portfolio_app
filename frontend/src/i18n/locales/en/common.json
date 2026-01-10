@@ -1,0 +1,94 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "projects": "Projects",
+        "blog": "Blog",
+        "contact": "Contact",
+        "dashboard": "Dashboard"
+    },
+    "hero": {
+        "greeting": "Hello, I'm",
+        "role": "AI and Full-Stack Developer",
+        "description": "I develop user-oriented, scalable solutions with modern web technologies and artificial intelligence.",
+        "view_projects": "View Projects",
+        "contact_me": "Contact Me",
+        "download_cv": "Download CV"
+    },
+    "about": {
+        "title": "About",
+        "title_highlight": "Me",
+        "badge": "My Journey",
+        "description": "Where Passion Meets Experience",
+        "download_cv": "Download CV",
+        "experience_education": "Experience & Education"
+    },
+    "projects": {
+        "title": "Featured",
+        "title_highlight": "Projects",
+        "badge": "Portfolio",
+        "description": "Selected projects developed with passion and precision.",
+        "view_live": "Live Demo",
+        "github": "Code",
+        "details": "Details"
+    },
+    "blog": {
+        "title": "My Thoughts and",
+        "title_highlight": "Stories",
+        "badge": "Blog & Articles",
+        "description": "Articles I share on technology, software and my experiences.",
+        "no_posts": "No posts found yet.",
+        "read_more": "Read More",
+        "go_to_site": "Go to Site",
+        "external": "External"
+    },
+    "contact": {
+        "title": "Let's Build Something",
+        "title_highlight": "Great Together",
+        "description": "I'm open to new opportunities and projects. If you have a question, want to collaborate, or just want to talk tech over a coffee, write to me!",
+        "email": "Email",
+        "location": "Location",
+        "location_val": "Istanbul, Turkey",
+        "social": "Social Media",
+        "name": "Name",
+        "name_placeholder": "Your Full Name",
+        "email_label": "Email",
+        "email_placeholder": "example@email.com",
+        "subject": "Subject",
+        "subject_general": "General Inquiry",
+        "subject_proposal": "Project Proposal",
+        "subject_interview": "Job Interview",
+        "subject_other": "Other",
+        "message": "Your Message",
+        "message_placeholder": "Tell me about the project or just say hi...",
+        "send": "Send Message",
+        "sending": "Sending...",
+        "success": "Your message has been sent successfully! I will get back to you as soon as possible.",
+        "error": "An error occurred while sending your message. Please try again.",
+        "footer": "© 2024 Portfolio. All rights reserved."
+    },
+    "services": {
+        "badge": "Areas of Expertise",
+        "title": "Services & ",
+        "title_highlight": "Skills",
+        "description": "Building robust, scalable, and responsive applications with a modern technology stack.",
+        "frontend_title": "Frontend Development",
+        "frontend_desc": "I design responsive, accessible and seamless user interfaces. I create fluid experiences with modern component-based architectures.",
+        "backend_title": "Backend Development",
+        "backend_desc": "I design robust RESTful and GraphQL APIs. I build scalable server logic and optimize database queries.",
+        "ai_title": "AI Integration",
+        "ai_desc": "I develop automation and smart features by integrating Large Language Models (LLM) and intelligent agents into applications.",
+        "devops_title": "DevOps & Cloud Architecture",
+        "devops_desc": "I accelerate the deployment cycle with CI/CD processes and containerization. I ensure applications scale in the cloud."
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "send": "Send",
+        "success": "Success",
+        "completed_projects": "Completed Projects",
+        "years_experience": "Years Experience",
+        "name_placeholder": "Name not loaded"
+    }
+}

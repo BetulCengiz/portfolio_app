@@ -9,7 +9,10 @@ export default function SettingsPage() {
         site_description: '',
         site_url: '',
         contact_email: '',
-        site_keywords: ''
+        site_keywords: '',
+        analytics_id: '',
+        analytics_url: 'https://cloud.umami.is/script.js',
+        analytics_share_url: ''
     });
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
@@ -24,7 +27,10 @@ export default function SettingsPage() {
                         site_description: data.site_description || '',
                         site_url: data.site_url || '',
                         contact_email: data.contact_email || '',
-                        site_keywords: data.site_keywords || ''
+                        site_keywords: data.site_keywords || '',
+                        analytics_id: data.analytics_id || '',
+                        analytics_url: data.analytics_url || 'https://cloud.umami.is/script.js',
+                        analytics_share_url: data.analytics_share_url || ''
                     });
                 }
             } catch (error) {
@@ -54,6 +60,10 @@ export default function SettingsPage() {
             <h1 className="text-white text-4xl font-black tracking-tight font-space border-b border-admin-border pb-6">Site Ayarları</h1>
 
             <div className="bg-admin-surface border border-admin-border rounded-2xl p-8 space-y-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <span className="material-symbols-outlined text-admin-primary">settings</span>
+                    Genel Ayarlar
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
                         <label className="text-white font-bold">Site Başlığı</label>
@@ -104,6 +114,41 @@ export default function SettingsPage() {
                             placeholder="portfolio, developer, react..."
                         />
                     </div>
+                </div>
+
+                <h2 className="text-xl font-bold text-white flex items-center gap-2 pt-6">
+                    <span className="material-symbols-outlined text-admin-primary">analytics</span>
+                    Umami Analytics Ayarları
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-white font-bold">Umami Website ID</label>
+                        <input
+                            value={settings.analytics_id}
+                            onChange={(e) => setSettings({ ...settings, analytics_id: e.target.value })}
+                            className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
+                            placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <label className="text-white font-bold">Umami Script URL</label>
+                        <input
+                            value={settings.analytics_url}
+                            onChange={(e) => setSettings({ ...settings, analytics_url: e.target.value })}
+                            className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
+                            placeholder="https://cloud.umami.is/script.js"
+                        />
+                    </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <label className="text-white font-bold">Umami Dashboard Share URL (Iframe için)</label>
+                    <input
+                        value={settings.analytics_share_url}
+                        onChange={(e) => setSettings({ ...settings, analytics_share_url: e.target.value })}
+                        className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
+                        placeholder="https://cloud.umami.is/share/XXXXX/your-site"
+                    />
+                    <p className="text-xs text-admin-muted italic">Umami'de 'Share URL' ayarını etkinleştirip buraya yapıştırın. Bu URL admin panelindeki analitik ekranında kullanılacaktır.</p>
                 </div>
 
                 <div className="pt-4">

@@ -7,10 +7,12 @@ export default function AboutManagement() {
     const [userData, setUserData] = useState({
         full_name: '',
         title: '',
+        title_en: '',
         bio: '',
+        bio_en: '',
         avatar_url: '',
-        cv_url: ''
-        
+        cv_url: '',
+        cv_url_en: ''
     });
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
@@ -24,9 +26,12 @@ export default function AboutManagement() {
                     setUserData({
                         full_name: data.full_name || '',
                         title: data.title || '',
+                        title_en: data.title_en || '',
                         bio: data.bio || '',
+                        bio_en: data.bio_en || '',
                         avatar_url: data.profile_image || '',
                         cv_url: data.cv_url || '',
+                        cv_url_en: data.cv_url_en || '',
                     });
                 }
             } catch (error) {
@@ -40,7 +45,7 @@ export default function AboutManagement() {
     }, []);
 
     // --- DOSYA YÜKLEME MANTIĞI ---
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'avatar_url' | 'cv_url') => {
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'avatar_url' | 'cv_url' | 'cv_url_en') => {
         const file = e.target.files?.[0];
         if (!file) return;
 
@@ -67,9 +72,12 @@ export default function AboutManagement() {
             const payload = {
                 full_name: userData.full_name,
                 title: userData.title,
+                title_en: userData.title_en,
                 bio: userData.bio,
+                bio_en: userData.bio_en,
                 profile_image: userData.avatar_url,
                 cv_url: userData.cv_url,
+                cv_url_en: userData.cv_url_en,
             };
 
             await api.updateAbout(payload);
@@ -90,39 +98,34 @@ export default function AboutManagement() {
             <form onSubmit={handleSubmit} className="bg-admin-surface border border-admin-border rounded-2xl p-8 space-y-6">
 
                 <h3 className="text-xl font-bold text-white mb-4">Kişisel Bilgiler</h3>
+
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-2">
-                        <label className="text-white font-bold">Cümle 1</label>
-                        <input
-                            value={userData.full_name}
-                            onChange={(e) => setUserData({ ...userData, full_name: e.target.value })}
-                            className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
+                        <label className="text-white font-bold">Biyografi (TR)</label>
+                        <textarea
+                            rows={6}
+                            placeholder="Kendinizden bahsedin..."
+                            value={userData.bio}
+                            onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
+                            className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none resize-none"
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label className="text-white font-bold">Cümle 2</label>
-                        <input
-                            value={userData.title}
-                            onChange={(e) => setUserData({ ...userData, title: e.target.value })}
-                            className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
+                        <label className="text-white font-bold">Biography (EN)</label>
+                        <textarea
+                            rows={6}
+                            placeholder="Tell about yourself..."
+                            value={userData.bio_en || ''}
+                            onChange={(e) => setUserData({ ...userData, bio_en: e.target.value })}
+                            className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none resize-none"
                         />
                     </div>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label className="text-white font-bold">Biyografi</label>
-                    <textarea
-                        rows={6}
-                        placeholder="Kendinizden bahsedin..."
-                        value={userData.bio}
-                        onChange={(e) => setUserData({ ...userData, bio: e.target.value })}
-                        className="bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none resize-none"
-                    />
                 </div>
 
                 <h3 className="text-xl font-bold text-white mb-4 pt-4 border-t border-admin-border">Bağlantılar & Medya</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
+
                     {/* Avatar Yükleme Alanı */}
                     <div className="flex flex-col gap-2">
                         <label className="text-white font-bold">Avatar (Resim Yükle)</label>
@@ -140,9 +143,9 @@ export default function AboutManagement() {
                         </div>
                     </div>
 
-                    {/* CV Yükleme Alanı */}
+                    {/* CV (TR) Yükleme Alanı */}
                     <div className="flex flex-col gap-2">
-                        <label className="text-white font-bold">CV (PDF Yükle)</label>
+                        <label className="text-white font-bold">CV (Türkçe PDF Yükle)</label>
                         <div className="flex gap-2">
                             <input
                                 placeholder="URL buraya gelecek..."
@@ -150,16 +153,33 @@ export default function AboutManagement() {
                                 onChange={(e) => setUserData({ ...userData, cv_url: e.target.value })}
                                 className="flex-1 bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
                             />
-                            <label className="bg-admin-border hover:bg-admin-primary transition-colors px-4 py-3 rounded-xl cursor-pointer text-white text-sm flex items-center justify-center">
+                            <label className="bg-admin-border hover:bg-admin-primary transition-colors px-4 py-3 rounded-xl cursor-pointer text-white text-sm flex items-center justify-center min-w-[80px]">
                                 {uploading['cv_url'] ? '...' : 'Seç'}
                                 <input type="file" className="hidden" accept=".pdf" onChange={(e) => handleFileUpload(e, 'cv_url')} />
+                            </label>
+                        </div>
+                    </div>
+
+                    {/* CV (EN) Yükleme Alanı */}
+                    <div className="flex flex-col gap-2">
+                        <label className="text-white font-bold">CV (English PDF Upload)</label>
+                        <div className="flex gap-2">
+                            <input
+                                placeholder="URL here..."
+                                value={userData.cv_url_en}
+                                onChange={(e) => setUserData({ ...userData, cv_url_en: e.target.value })}
+                                className="flex-1 bg-admin-surface-light border border-admin-border rounded-xl px-4 py-3 text-white focus:border-admin-primary focus:outline-none"
+                            />
+                            <label className="bg-admin-border hover:bg-admin-primary transition-colors px-4 py-3 rounded-xl cursor-pointer text-white text-sm flex items-center justify-center min-w-[80px]">
+                                {uploading['cv_url_en'] ? '...' : 'Select'}
+                                <input type="file" className="hidden" accept=".pdf" onChange={(e) => handleFileUpload(e, 'cv_url_en')} />
                             </label>
                         </div>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    
+
                 </div>
 
                 <div className="pt-6">

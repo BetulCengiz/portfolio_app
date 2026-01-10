@@ -13,7 +13,9 @@ export default function NewProject() {
     // Form States
     const [formData, setFormData] = useState({
         title: '',
+        title_en: '',
         description: '',
+        description_en: '',
         content: '',
         image_url: '',
         github_url: '',
@@ -133,36 +135,69 @@ export default function NewProject() {
                     {/* Main Section */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* Title */}
-                        <div className="flex flex-col gap-3">
-                            <label className="text-white text-lg font-bold flex items-center gap-2">
-                                <span className="material-symbols-outlined text-admin-primary">title</span>
-                                Proje Adı
-                            </label>
-                            <input
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full bg-admin-surface border border-admin-border rounded-2xl px-5 py-4 text-white placeholder:text-admin-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all text-lg font-medium shadow-inner"
-                                placeholder="Örn: Modern E-ticaret Platformu"
-                                type="text"
-                            />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="flex flex-col gap-3">
+                                <label className="text-white text-lg font-bold flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-admin-primary">title</span>
+                                    Proje Adı (TR)
+                                </label>
+                                <input
+                                    value={formData.title}
+                                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                    className="w-full bg-admin-surface border border-admin-border rounded-2xl px-5 py-4 text-white placeholder:text-admin-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all text-lg font-medium shadow-inner"
+                                    placeholder="Örn: Modern E-ticaret Platformu"
+                                    type="text"
+                                />
+                            </div>
+                            <div className="flex flex-col gap-3">
+                                <label className="text-white text-lg font-bold flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-admin-primary">title</span>
+                                    Project Title (EN)
+                                </label>
+                                <input
+                                    value={formData.title_en || ''}
+                                    onChange={(e) => setFormData({ ...formData, title_en: e.target.value })}
+                                    className="w-full bg-admin-surface border border-admin-border rounded-2xl px-5 py-4 text-white placeholder:text-admin-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all text-lg font-medium shadow-inner"
+                                    placeholder="Ex: Modern E-commerce Platform"
+                                    type="text"
+                                />
+                            </div>
                         </div>
 
                         {/* Description */}
-                        <div className="flex flex-col gap-3">
-                            <div className="flex justify-between items-end">
-                                <label className="text-white text-lg font-bold flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-admin-primary">description</span>
-                                    Kısa Açıklama
-                                </label>
-                                <span className="text-xs text-admin-muted font-mono tracking-tighter">{formData.description.length} / 250</span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="flex flex-col gap-3">
+                                <div className="flex justify-between items-end">
+                                    <label className="text-white text-lg font-bold flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-admin-primary">description</span>
+                                        Kısa Açıklama (TR)
+                                    </label>
+                                    <span className="text-xs text-admin-muted font-mono tracking-tighter">{formData.description.length} / 250</span>
+                                </div>
+                                <textarea
+                                    value={formData.description}
+                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                    maxLength={250}
+                                    className="w-full bg-admin-surface border border-admin-border rounded-2xl px-5 py-4 text-white placeholder:text-admin-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all h-64 resize-none shadow-inner"
+                                    placeholder="Projenin ana fikrini kısaca özetleyin..."
+                                ></textarea>
                             </div>
-                            <textarea
-                                value={formData.description}
-                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                maxLength={250}
-                                className="w-full bg-admin-surface border border-admin-border rounded-2xl px-5 py-4 text-white placeholder:text-admin-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all h-76 resize-none shadow-inner"
-                                placeholder="Projenin ana fikrini kısaca özetleyin..."
-                            ></textarea>
+                            <div className="flex flex-col gap-3">
+                                <div className="flex justify-between items-end">
+                                    <label className="text-white text-lg font-bold flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-admin-primary">description</span>
+                                        Short Description (EN)
+                                    </label>
+                                    <span className="text-xs text-admin-muted font-mono tracking-tighter">{(formData.description_en || '').length} / 250</span>
+                                </div>
+                                <textarea
+                                    value={formData.description_en || ''}
+                                    onChange={(e) => setFormData({ ...formData, description_en: e.target.value })}
+                                    maxLength={250}
+                                    className="w-full bg-admin-surface border border-admin-border rounded-2xl px-5 py-4 text-white placeholder:text-admin-muted focus:outline-none focus:ring-2 focus:ring-admin-primary/50 focus:border-admin-primary transition-all h-64 resize-none shadow-inner"
+                                    placeholder="Briefly summarize the main idea of the project..."
+                                ></textarea>
+                            </div>
                         </div>
 
                         {/* Technologies */}

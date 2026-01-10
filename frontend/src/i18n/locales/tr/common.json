@@ -1,0 +1,93 @@
+{
+    "nav": {
+        "home": "Anasayfa",
+        "about": "Hakkımda",
+        "services": "Hizmetler",
+        "projects": "Projeler",
+        "blog": "Blog",
+        "contact": "İletişim",
+        "dashboard": "Panel"
+    },
+    "hero": {
+        "greeting": "Merhaba, Ben",
+        "role": "Yapay Zeka ve Full-Stack Geliştirici",
+        "description": "Modern web teknolojileri ve yapay zeka ile kullanıcı odaklı, ölçeklenebilir çözümler geliştiriyorum.",
+        "view_projects": "Projeleri Gör",
+        "contact_me": "İletişime Geç",
+        "download_cv": "CV İndir"
+    },
+    "about": {
+        "title": "Hakkımda",
+        "title_highlight": "Me",
+        "badge": "Yolculuğum",
+        "description": "Tutku ve Deneyimin Buluştuğu Nokta",
+        "download_cv": "CV İndir",
+        "experience_education": "Deneyim & Eğitim"
+    },
+    "projects": {
+        "title": "Öne Çıkan",
+        "title_highlight": "Projelerim",
+        "badge": "Portfolyo",
+        "description": "Tutku ve hassasiyetle geliştirilmiş seçkin projeler.",
+        "view_live": "Canlı Demo",
+        "github": "Kod",
+        "details": "Detaylar"
+    },
+    "blog": {
+        "title": "Düşüncelerim ve",
+        "title_highlight": "Hikayelerim",
+        "badge": "Blog & Yazılar",
+        "description": "Teknoloji, yazılım ve deneyimlerim üzerine paylaştığım yazılar.",
+        "no_posts": "Henüz yazı bulunmamaktadır.",
+        "read_more": "Devamını Oku",
+        "go_to_site": "Siteye Git",
+        "external": "Dış Bağlantı"
+    },
+    "contact": {
+        "title": "Birlikte Harika Şeyler",
+        "title_highlight": "İnşa Edelim",
+        "description": "Yeni fırsatlara ve projelere açığım. Bir sorunuz varsa, iş birliği yapmak isterseniz veya sadece bir kahve eşliğinde teknoloji konuşmak isterseniz bana yazın!",
+        "email": "E-posta",
+        "location": "Konum",
+        "location_val": "İstanbul, Türkiye",
+        "social": "Sosyal Medya",
+        "name": "İsim",
+        "name_placeholder": "Adınız Soyadınız",
+        "email_label": "E-posta",
+        "email_placeholder": "ornek@email.com",
+        "subject": "Konu",
+        "subject_general": "Genel Soru",
+        "subject_proposal": "Proje Teklifi",
+        "subject_interview": "İş Görüşmesi",
+        "subject_other": "Diğer",
+        "message": "Mesajınız",
+        "message_placeholder": "Projeden bahsedin veya sadece merhaba deyin...",
+        "send": "Mesaj Gönder",
+        "sending": "Gönderiliyor...",
+        "success": "Mesajınız başarıyla gönderildi! Sizinle en kısa sürede iletişime geçeceğim.",
+        "error": "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        "footer": "© 2024 Portfolyo. Tüm hakları saklıdır."
+    },
+    "services": {
+        "badge": "Uzmanlık Alanlarım",
+        "title": "Servisler & ",
+        "title_highlight": "Yetenekler",
+        "description": "Modern bir teknoloji yığını ile sağlam, ölçeklenebilir ve duyarlı uygulamalar inşa ediyorum.",
+        "frontend_title": "Frontend Geliştirme",
+        "frontend_desc": "Duyarlı, erişilebilir ve kusursuz kullanıcı arayüzleri tasarlıyorum. Modern bileşen tabanlı mimariler ile akıcı deneyimler oluşturuyorum.",
+        "backend_title": "Backend Geliştirme",
+        "backend_desc": "Sağlam RESTful ve GraphQL API'leri tasarlıyorum. Ölçeklenebilir sunucu mantığı kuruyor ve veritabanı sorgularını optimize ediyorum.",
+        "ai_title": "Yapay Zeka Entegrasyonu",
+        "ai_desc": "Büyük Dil Modelleri (LLM) ve akıllı ajanları uygulamalara entegre ederek otomasyon ve akıllı özellikler geliştiriyorum.",
+        "devops_title": "DevOps & Bulut Mimari",
+        "devops_desc": "CI/CD süreçleri ve konteynerizasyon ile dağıtım döngüsünü hızlandırıyorum. Uygulamaların bulutta ölçeklenmesini sağlıyorum."
+    },
+    "common": {
+        "loading": "Yükleniyor...",
+        "error": "Bir hata oluştu",
+        "send": "Gönder",
+        "success": "Başarılı",
+        "completed_projects": "Tamamlanan Proje",
+        "years_experience": "Yıl Deneyim"
+    }
+}

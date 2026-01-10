@@ -5,8 +5,9 @@ import { api } from '@/utils/api';
 
 export default function TimelineManagement() {
     const [timelineItems, setTimelineItems] = useState<any[]>([]);
-    const [formData, setFormData] = useState({ year: '', title: '', description: '', icon: 'work' });
+    const [formData, setFormData] = useState({ year: '', year_en: '', title: '', title_en: '', company: '', company_en: '', description: '', description_en: '', icon: 'work' });
     const [loading, setLoading] = useState(true);
+    const [selectedId, setSelectedId] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchTimeline = async () => {
@@ -25,12 +26,35 @@ export default function TimelineManagement() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const newItem = await api.createTimeline({ ...formData, order: timelineItems.length });
-            setTimelineItems([...timelineItems, newItem]);
-            setFormData({ year: '', title: '', description: '', icon: 'work' });
+            if (selectedId) {
+                const updatedItem = await api.updateTimeline(selectedId, formData);
+                setTimelineItems(timelineItems.map(item => item.id === selectedId ? updatedItem : item));
+                setSelectedId(null);
+            } else {
+                const newItem = await api.createTimeline({ ...formData, order: timelineItems.length });
+                setTimelineItems([...timelineItems, newItem]);
+            }
+            setFormData({ year: '', year_en: '', title: '', title_en: '', company: '', company_en: '', description: '', description_en: '', icon: 'work' });
         } catch (error) {
             console.error(error);
+            alert('İşlem başarısız oldu.');
         }
+    };
+
+    const handleEdit = (item: any) => {
+        setSelectedId(item.id);
+        setFormData({
+            year: item.year || '',
+            year_en: item.year_en || '',
+            title: item.title || '',
+            title_en: item.title_en || '',
+            company: item.company || '',
+            company_en: item.company_en || '',
+            description: item.description || '',
+            description_en: item.description_en || '',
+            icon: item.icon || 'work'
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleDelete = async (id: number) => {
@@ -38,6 +62,10 @@ export default function TimelineManagement() {
         try {
             await api.deleteTimeline(id);
             setTimelineItems(timelineItems.filter(i => i.id !== id));
+            if (selectedId === id) {
+                setSelectedId(null);
+                setFormData({ year: '', year_en: '', title: '', title_en: '', company: '', company_en: '', description: '', description_en: '', icon: 'work' });
+            }
         } catch (error) {
             console.error(error);
         }
@@ -80,15 +108,33 @@ export default function TimelineManagement() {
                                         </div>
                                         {/* Content */}
                                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 bg-admin-bg/50 hover:bg-admin-surface-light/30 p-4 rounded-xl border border-admin-border transition-all hover:border-admin-primary/50">
-                                            <div className="flex flex-col gap-1">
-                                                <span className="text-admin-primary font-bold text-sm tracking-wider">{item.year}</span>
-                                                <h4 className="text-white text-lg font-bold">{item.title}</h4>
-                                                <p className="text-admin-muted text-sm line-clamp-2">{item.description}</p>
-                                            </div>
-                                            <div className="flex sm:flex-col gap-2 shrink-0">
-                                                <button onClick={() => handleDelete(item.id)} className="h-8 w-8 flex items-center justify-center rounded-lg bg-admin-surface-light border border-admin-border hover:bg-red-500/20 hover:text-red-400 text-admin-muted transition-colors">
-                                                    <span className="material-symbols-outlined text-[18px]">delete</span>
-                                                </button>
+                                            <div className="flex flex-col gap-1 w-full">
+                                                <div className="flex justify-between items-center">
+                                                    <div className="flex flex-col items-end">
+                                                        <span className="text-admin-primary font-bold text-sm tracking-wider">{item.year}</span>
+                                                        {item.year_en && <span className="text-admin-muted text-xs italic">{item.year_en}</span>}
+                                                    </div>
+                                                    <div className="flex gap-2">
+                                                        <button onClick={() => handleEdit(item)} className="h-8 w-8 flex items-center justify-center rounded-lg bg-admin-surface-light border border-admin-border hover:bg-admin-primary/20 hover:text-admin-primary text-admin-muted transition-colors">
+                                                            <span className="material-symbols-outlined text-[18px]">edit</span>
+                                                        </button>
+                                                        <button onClick={() => handleDelete(item.id)} className="h-8 w-8 flex items-center justify-center rounded-lg bg-admin-surface-light border border-admin-border hover:bg-red-500/20 hover:text-red-400 text-admin-muted transition-colors">
+                                                            <span className="material-symbols-outlined text-[18px]">delete</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                                                    <div>
+                                                        <h4 className="text-white text-md font-bold">{item.title}</h4>
+                                                        {item.company && <p className="text-admin-primary text-sm font-medium">{item.company}</p>}
+                                                        <p className="text-admin-muted text-xs line-clamp-2">{item.description}</p>
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="text-white/70 text-md font-bold italic">{item.title_en || 'N/A'}</h4>
+                                                        {item.company_en && <p className="text-admin-primary/70 text-sm font-medium italic">{item.company_en}</p>}
+                                                        <p className="text-admin-muted text-xs line-clamp-2 italic">{item.description_en || 'N/A'}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -101,36 +147,105 @@ export default function TimelineManagement() {
                     <div className="lg:col-span-5 lg:sticky lg:top-8">
                         <div className="bg-admin-surface border border-admin-border rounded-2xl p-6 shadow-xl relative overflow-hidden">
                             <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-sm font-medium text-admin-muted ml-1">Yıl / Dönem</label>
-                                    <input
-                                        value={formData.year}
-                                        onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                                        required
-                                        className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
-                                        placeholder="Örn: 2024 - Günümüz"
-                                    />
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-lg font-bold text-white">{selectedId ? 'Kaydı Düzenle' : 'Yeni Kayıt Ekle'}</h3>
+                                    {selectedId && (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setSelectedId(null);
+                                                setFormData({ year: '', year_en: '', title: '', title_en: '', company: '', company_en: '', description: '', description_en: '', icon: 'work' });
+                                            }}
+                                            className="text-xs text-admin-muted hover:text-white"
+                                        >
+                                            İptal Et
+                                        </button>
+                                    )}
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-sm font-medium text-admin-muted ml-1">Başlık</label>
-                                    <input
-                                        value={formData.title}
-                                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                        required
-                                        className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
-                                        placeholder="Pozisyon veya Okul Adı"
-                                    />
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Yıl / Dönem (TR)</label>
+                                        <input
+                                            value={formData.year}
+                                            onChange={(e) => setFormData({ ...formData, year: e.target.value })}
+                                            required
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
+                                            placeholder="Örn: 2024 - Günümüz"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Year / Period (EN)</label>
+                                        <input
+                                            value={formData.year_en}
+                                            onChange={(e) => setFormData({ ...formData, year_en: e.target.value })}
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
+                                            placeholder="Ex: 2024 - Present"
+                                        />
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <label className="text-sm font-medium text-admin-muted ml-1">Açıklama</label>
-                                    <textarea
-                                        value={formData.description}
-                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                        required
-                                        className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary resize-none"
-                                        placeholder="Detaylar..."
-                                        rows={4}
-                                    ></textarea>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Başlık (TR)</label>
+                                        <input
+                                            value={formData.title}
+                                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                            required
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
+                                            placeholder="Pozisyon veya Okul"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Title (EN)</label>
+                                        <input
+                                            value={formData.title_en}
+                                            onChange={(e) => setFormData({ ...formData, title_en: e.target.value })}
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
+                                            placeholder="Position or School"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Kurum/Şirket (TR)</label>
+                                        <input
+                                            value={formData.company}
+                                            onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
+                                            placeholder="Örn: Google / Boğaziçi Üniversitesi"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Company (EN)</label>
+                                        <input
+                                            value={formData.company_en}
+                                            onChange={(e) => setFormData({ ...formData, company_en: e.target.value })}
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary"
+                                            placeholder="Ex: Google / Bogazici University"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Açıklama (TR)</label>
+                                        <textarea
+                                            value={formData.description}
+                                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                            required
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary resize-none"
+                                            placeholder="Detaylar..."
+                                            rows={4}
+                                        ></textarea>
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-sm font-medium text-admin-muted ml-1">Description (EN)</label>
+                                        <textarea
+                                            value={formData.description_en}
+                                            onChange={(e) => setFormData({ ...formData, description_en: e.target.value })}
+                                            className="w-full bg-admin-bg border border-admin-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-admin-primary resize-none"
+                                            placeholder="Details..."
+                                            rows={4}
+                                        ></textarea>
+                                    </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <label className="text-sm font-medium text-admin-muted ml-1">İkon</label>
@@ -153,13 +268,13 @@ export default function TimelineManagement() {
                                     </div>
                                 </div>
                                 <button className="mt-4 px-4 py-3 rounded-xl bg-admin-primary text-white font-bold hover:bg-admin-primary-hover transition-all" type="submit">
-                                    Kaydet
+                                    {selectedId ? 'Güncelle' : 'Kaydet'}
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

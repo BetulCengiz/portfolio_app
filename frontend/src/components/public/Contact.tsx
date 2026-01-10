@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { api } from '@/utils/api';
+import { useTranslation } from 'react-i18next';
 
 const Contact = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        subject: 'Genel Soru',
+        subject: t('contact.subject_general'),
         message: ''
     });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
@@ -25,13 +27,13 @@ const Contact = () => {
             });
 
             setStatus('success');
-            setFormData({ name: '', email: '', subject: 'Genel Soru', message: '' });
-            alert('Mesajınız başarıyla gönderildi! Sizinle en kısa sürede iletişime geçeceğim.');
+            setFormData({ name: '', email: '', subject: t('contact.subject_general'), message: '' });
+            alert(t('contact.success'));
             setTimeout(() => setStatus('idle'), 3000);
         } catch (error) {
             console.error('Mesaj gönderilemedi:', error);
             setStatus('error');
-            alert('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+            alert(t('contact.error'));
             setTimeout(() => setStatus('idle'), 3000);
         }
     };
@@ -53,10 +55,10 @@ const Contact = () => {
                                     <span className="material-symbols-outlined text-primary" style={{ fontSize: '24px' }}>mark_email_unread</span>
                                 </div>
                                 <h2 className="text-white text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-4">
-                                    Birlikte Harika Şeyler <span className="text-gradient">İnşa Edelim</span>
+                                    {t('contact.title')} <span className="text-gradient">{t('contact.title_highlight')}</span>
                                 </h2>
                                 <p className="text-gray-400 text-lg font-light leading-relaxed mb-8 max-w-md">
-                                    Yeni fırsatlara ve projelere açığım. Bir sorunuz varsa, iş birliği yapmak isterseniz veya sadece bir kahve eşliğinde teknoloji konuşmak isterseniz bana yazın!
+                                    {t('contact.description')}
                                 </p>
 
                                 <div className="space-y-6 mb-8">
@@ -65,7 +67,7 @@ const Contact = () => {
                                             <span className="material-symbols-outlined !text-[20px]">mail</span>
                                         </div>
                                         <div>
-                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1 group-hover:text-primary transition-colors">E-posta</p>
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1 group-hover:text-primary transition-colors">{t('contact.email')}</p>
                                             <span className="text-lg font-medium">iletisim@ornek.com</span>
                                         </div>
                                     </div>
@@ -75,15 +77,15 @@ const Contact = () => {
                                             <span className="material-symbols-outlined !text-[20px]">location_on</span>
                                         </div>
                                         <div>
-                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1 group-hover:text-primary transition-colors">Konum</p>
-                                            <span className="text-lg font-medium">İstanbul, Türkiye</span>
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1 group-hover:text-primary transition-colors">{t('contact.location')}</p>
+                                            <span className="text-lg font-medium">{t('contact.location_val')}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="mt-8">
-                                <p className="text-sm font-medium text-gray-500 mb-4 uppercase tracking-wider">Sosyal Medya</p>
+                                <p className="text-sm font-medium text-gray-500 mb-4 uppercase tracking-wider">{t('contact.social')}</p>
                                 <div className="flex gap-4">
                                     {[
                                         { icon: 'code', label: 'GitHub' },
@@ -109,28 +111,28 @@ const Contact = () => {
                             <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2 group">
-                                        <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">İsim</span>
+                                        <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">{t('contact.name')}</span>
                                         <div className="relative">
                                             <input
                                                 required
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                 className="flex w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/20 h-14 px-4 pl-11 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-light"
-                                                placeholder="Adınız Soyadınız"
+                                                placeholder={t('contact.name_placeholder')}
                                                 type="text"
                                             />
                                             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-colors !text-[20px]">person</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-2 group">
-                                        <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">E-posta</span>
+                                        <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">{t('contact.email_label')}</span>
                                         <div className="relative">
                                             <input
                                                 required
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                 className="flex w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/20 h-14 px-4 pl-11 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-light"
-                                                placeholder="ornek@email.com"
+                                                placeholder={t('contact.email_placeholder')}
                                                 type="email"
                                             />
                                             <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-colors !text-[20px]">alternate_email</span>
@@ -138,30 +140,30 @@ const Contact = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2 group">
-                                    <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">Konu</span>
+                                    <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">{t('contact.subject')}</span>
                                     <div className="relative">
                                         <select
                                             value={formData.subject}
                                             onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                             className="flex w-full rounded-xl bg-white/5 border border-white/10 text-white h-14 px-4 pl-11 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-light appearance-none cursor-pointer"
                                         >
-                                            <option className="bg-[#0B0E14]">Genel Soru</option>
-                                            <option className="bg-[#0B0E14]">Proje Teklifi</option>
-                                            <option className="bg-[#0B0E14]">İş Görüşmesi</option>
-                                            <option className="bg-[#0B0E14]">Diğer</option>
+                                            <option className="bg-[#0B0E14]">{t('contact.subject_general')}</option>
+                                            <option className="bg-[#0B0E14]">{t('contact.subject_proposal')}</option>
+                                            <option className="bg-[#0B0E14]">{t('contact.subject_interview')}</option>
+                                            <option className="bg-[#0B0E14]">{t('contact.subject_other')}</option>
                                         </select>
                                         <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-colors !text-[20px]">chat_bubble_outline</span>
                                         <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-white/20 pointer-events-none !text-[20px]">expand_more</span>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2 group">
-                                    <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">Mesajınız</span>
+                                    <span className="text-gray-300 text-sm font-medium ml-1 group-focus-within:text-primary transition-colors">{t('contact.message')}</span>
                                     <textarea
                                         required
                                         value={formData.message}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                         className="flex w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/20 p-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-light min-h-[160px] resize-none"
-                                        placeholder="Projeden bahsedin veya sadece merhaba deyin..."
+                                        placeholder={t('contact.message_placeholder')}
                                     ></textarea>
                                 </div>
                                 <div className="pt-2">
@@ -173,7 +175,7 @@ const Contact = () => {
                                         <span className={`material-symbols-outlined transition-transform ${status === 'sending' ? 'animate-spin' : 'group-hover:rotate-45'} !text-[24px]`}>
                                             {status === 'sending' ? 'sync' : 'send'}
                                         </span>
-                                        <span>{status === 'sending' ? 'Gönderiliyor...' : 'Mesaj Gönder'}</span>
+                                        <span>{status === 'sending' ? t('contact.sending') : t('contact.send')}</span>
                                     </button>
                                 </div>
                             </form>
@@ -183,7 +185,7 @@ const Contact = () => {
 
                 <div className="mt-12 text-center animate-card">
                     <p className="text-gray-500 text-sm">
-                        © 2024 Portfolyo. Tüm hakları saklıdır.
+                        {t('contact.footer')}
                     </p>
                 </div>
             </div>

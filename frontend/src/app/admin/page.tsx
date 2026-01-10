@@ -12,6 +12,7 @@ export default function AdminDashboard() {
     });
     const [recentProjects, setRecentProjects] = useState<any[]>([]);
     const [recentMessages, setRecentMessages] = useState<any[]>([]);
+    const [analyticsShareUrl, setAnalyticsShareUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -31,6 +32,12 @@ export default function AdminDashboard() {
                 const messages = await api.getMessages();
                 if (Array.isArray(messages)) {
                     setRecentMessages(messages.slice(0, 2));
+                }
+
+                // Fetch analytics share url
+                const settings = await api.getSettings();
+                if (settings?.analytics_share_url) {
+                    setAnalyticsShareUrl(settings.analytics_share_url);
                 }
 
             } catch (error) {
@@ -101,6 +108,38 @@ export default function AdminDashboard() {
                             <p className="text-2xl font-bold text-white mt-1">{stat.value}</p>
                         </div>
                     ))}
+                </div>
+
+                {/* Analytics Section */}
+                <div className="flex flex-col gap-4">
+                    <h3 className="text-white text-xl font-bold flex items-center gap-2">
+                        <span className="material-symbols-outlined text-admin-primary">monitoring</span>
+                        Ziyaretçi Analizi
+                    </h3>
+                    <div className="bg-admin-surface border border-admin-border rounded-xl p-1 shadow-lg shadow-black/20 overflow-hidden min-h-[500px] flex items-center justify-center relative">
+                        {analyticsShareUrl ? (
+                            <iframe
+                                src={analyticsShareUrl + (analyticsShareUrl.includes('?') ? '&' : '?') + 'embed=true'}
+                                width="100%"
+                                height="800"
+                                frameBorder="0"
+                                className="rounded-lg bg-transparent"
+                            ></iframe>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center p-12 text-center w-full">
+                                <div className="p-4 bg-admin-bg rounded-2xl mb-4 text-admin-primary inline-flex">
+                                    <span className="material-symbols-outlined text-5xl">bar_chart</span>
+                                </div>
+                                <h4 className="text-white text-lg font-bold">Analiz Sistemi Aktif Değil</h4>
+                                <p className="text-admin-muted text-sm mt-2 max-w-md mx-auto">
+                                    Umami Cloud Dashboard'u burada görebilmek için ayarlar sayfasından "Share URL" bilginizi eklemelisiniz.
+                                </p>
+                                <Link href="/admin/settings" className="mt-6 text-admin-primary hover:text-white flex items-center justify-center gap-2 group transition-all font-medium">
+                                    Ayarlara Git <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Main Grid */}

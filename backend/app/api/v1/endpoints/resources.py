@@ -82,6 +82,24 @@ def delete_timeline_item(
     db.commit()
     return item
 
+@router.put("/timeline/{id}", response_model=schemas.Timeline)
+def update_timeline_item(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    item_in: schemas.TimelineUpdate,
+    current_user: User = Depends(deps.get_current_active_user),
+) -> Any:
+    item = db.query(TimelineItem).filter(TimelineItem.id == id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Öğe bulunamadı")
+    update_data = item_in.dict(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(item, field, value)
+    db.commit()
+    db.refresh(item)
+    return item
+
 # --- Messages ---
 @router.get("/messages", response_model=List[schemas.schemas.Message])
 def read_messages(

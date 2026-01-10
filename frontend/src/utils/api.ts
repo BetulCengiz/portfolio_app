@@ -132,6 +132,25 @@ export const api = {
         return response.json();
     },
 
+    async reorderProjects(orderedIds: number[]) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/projects/reorder`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(orderedIds),
+        });
+
+        if (!response.ok) {
+            throw new Error('Sıralama güncellenemedi');
+        }
+
+        return response.json();
+    },
+
     async uploadProjectImage(file: File) {
         const token = localStorage.getItem('token');
         const formData = new FormData();
@@ -211,6 +230,26 @@ export const api = {
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.detail || 'Timeline öğesi oluşturulamadı');
+        }
+
+        return response.json();
+    },
+
+    async updateTimeline(id: number, timelineData: any) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/resources/timeline/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(timelineData),
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Timeline öğesi güncellenemedi');
         }
 
         return response.json();

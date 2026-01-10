@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Renderer, Triangle, Program, Mesh } from 'ogl';
+import { Square } from 'lucide-react';
 
 type PrismProps = {
   height?: number;
@@ -20,18 +21,18 @@ type PrismProps = {
 };
 
 const Prism: React.FC<PrismProps> = ({
-  height = 3.5,
+  height = 2.5,
   baseWidth = 5.5,
   animationType = 'rotate',
   glow = 1,
   offset = { x: 0, y: 0 },
-  noise = 0.5,
+  noise = 0.2,
   transparent = true,
-  scale = 3.6,
+  scale = 2.5,
   hueShift = 0,
   colorFrequency = 1,
-  hoverStrength = 2,
-  inertia = 0.05,
+  hoverStrength = 5,
+  inertia = 0.12,
   bloom = 1,
   suspendWhenOffscreen = false,
   timeScale = 0.5
