@@ -1,5 +1,5 @@
 "use client";
-
+import { Linkedin, Github, Instagram, Youtube } from "lucide-react";
 import React, { useState } from 'react';
 import { api } from '@/utils/api';
 import { useTranslation } from 'react-i18next';
@@ -68,7 +68,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1 group-hover:text-primary transition-colors">{t('contact.email')}</p>
-                                            <span className="text-lg font-medium">iletisim@ornek.com</span>
+                                            <span className="text-lg font-medium">cengizzbetul@gmail.com</span>
                                         </div>
                                     </div>
 
@@ -86,22 +86,11 @@ const Contact = () => {
 
                             <div className="mt-8">
                                 <p className="text-sm font-medium text-gray-500 mb-4 uppercase tracking-wider">{t('contact.social')}</p>
-                                <div className="flex gap-4">
-                                    {[
-                                        { icon: 'code', label: 'GitHub' },
-                                        { icon: 'group', label: 'LinkedIn' },
-                                        { icon: 'photo_camera', label: 'Instagram' }
-                                    ].map((social, i) => (
-                                        <a
-                                            key={i}
-                                            href="#"
-                                            className="group relative flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 hover:bg-primary hover:border-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]"
-                                        >
-                                            <span className="material-symbols-outlined text-white transition-transform group-hover:scale-110 group-hover:text-black" style={{ fontSize: '24px' }}>
-                                                {social.icon}
-                                            </span>
-                                        </a>
-                                    ))}
+                                <div className="animate-fade-in-up animation-delay-500 flex gap-8 pt-2 px-4 justify-center lg:justify-start">
+                                    <a href="https://www.linkedin.com/in/betulcengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115 "><Linkedin size={28} /></a>
+                                    <a href="https://github.com/BetulCengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Github size={28} /></a>
+                                    <a href="https://www.instagram.com/betul_cengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Instagram size={28} /></a>
+                                    <a href="https://www.youtube.com/c/BetülCengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Youtube size={28} /></a>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +158,7 @@ const Contact = () => {
                                 <div className="pt-2">
                                     <button
                                         disabled={status === 'sending'}
-                                        className="group w-full md:w-auto relative overflow-hidden rounded-xl bg-primary text-white font-bold h-14 px-8 flex items-center justify-center gap-3 hover:bg-blue-400 transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="group w-full md:w-auto relative overflow-hidden rounded-xl bg-primary text-black font-bold h-14 px-8 flex items-center justify-center gap-3 hover:bg-pink-800 transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer"></span>
                                         <span className={`material-symbols-outlined transition-transform ${status === 'sending' ? 'animate-spin' : 'group-hover:rotate-45'} !text-[24px]`}>
