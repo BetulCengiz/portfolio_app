@@ -83,7 +83,7 @@ const About = ({ initialData, initialTimeline }: AboutProps) => {
     }
 
     return (
-        <section id="about" className="animate-section relative z-10 w-full min-h-screen py-20 px-6 md:px-20 lg:px-40 flex justify-center overflow-hidden">
+        <section id="about" className="animate-section relative z-10 w-full min-h-screen py-10 px-6 md:px-20 lg:px-40 flex justify-center overflow-hidden">
             {/* Background Blobs */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#0B0E14] via-[#0f1623] to-[#052e33] z-0"></div>
             <div className="absolute top-10 left-10 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -108,7 +108,7 @@ const About = ({ initialData, initialTimeline }: AboutProps) => {
                         </div>
                     </div>
 
-                    <div className="glass-panel p-3 rounded-xl text-white/80 leading-relaxed text-lg w-[550px]">
+                    <div className="glass-panel p-3 rounded-xl text-white/80 leading-relaxed text-lg w-[450px]  ">
                         <p className="font-light whitespace-pre-wrap">
                             {(isEn && aboutData?.bio_en) ? aboutData.bio_en : aboutData?.bio}
                         </p>
