@@ -4,11 +4,11 @@ sqlalchemy
 pydantic[email]
 pydantic-settings
 python-jose[cryptography]
-passlib[bcrypt]
-bcrypt==4.0.1
+bcrypt
 python-multipart
 python-dotenv
 alembic
 psycopg2-binary
 cors
 email-validator
+
