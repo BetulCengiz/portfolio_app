@@ -11,4 +11,5 @@ alembic
 psycopg2-binary
 cors
 email-validator
+httpx
 

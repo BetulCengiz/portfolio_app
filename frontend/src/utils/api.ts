@@ -4,7 +4,7 @@ export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localh
 export const api = {
     // ... imports ...
 
-    // Generic Image Upload (reusing project upload for now as it is a general file uploader)
+    // Generic Image Upload - uploads to Supabase Storage
     async uploadImage(file: File) {
         const token = localStorage.getItem('token');
         const formData = new FormData();
@@ -24,11 +24,8 @@ export const api = {
             throw new Error(error.detail || 'Görsel yüklenemedi');
         }
 
-        const data = await response.json();
-        if (data.image_url && data.image_url.startsWith('/')) {
-            data.image_url = `${BACKEND_URL}${data.image_url}`;
-        }
-        return data;
+        // Supabase Storage returns full public URL, no need to prepend
+        return response.json();
     },
     // api.ts içindeki login fonksiyonu
     async login(formData: any) {

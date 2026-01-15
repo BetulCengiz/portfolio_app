@@ -84,25 +84,14 @@ async def upload_project_image(
     file: UploadFile = File(...),
     current_user: models.models.User = Depends(deps.get_current_active_user),
 ):
-    # 1. Klasör kontrolü
-    upload_dir = "uploads"
-    if not os.path.exists(upload_dir):
-        os.makedirs(upload_dir)
-
-    # 2. Uzantı kontrolü
-    extension = file.filename.split(".")[-1].lower()
-    if extension not in ["jpg", "jpeg", "png", "webp"]:
-        raise HTTPException(status_code=400, detail="Sadece görsel dosyaları yüklenebilir.")
-
-    # 3. Benzersiz isim ve kayıt
-    file_name = f"{uuid.uuid4()}.{extension}"
-    file_path = os.path.join(upload_dir, file_name)
-
-    try:
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Dosya kaydedilemedi: {str(e)}")
-
-    # 4. URL döndür (Base URL eklemek frontend için daha kolay olabilir)
-    return {"image_url": f"/uploads/{file_name}"}
+    """Upload a project image to Supabase Storage."""
+    from app.core.storage import storage
+    
+    # Upload to Supabase Storage
+    public_url, file_path = await storage.upload_file(
+        file=file,
+        folder="projects",
+        allowed_extensions=["jpg", "jpeg", "png", "webp", "gif"]
+    )
+    
+    return {"image_url": public_url}

@@ -15,22 +15,31 @@ router = APIRouter()
 
 
 @router.post("/upload")
-def upload_file(
+async def upload_file(
     file: UploadFile = File(...),
-    current_user: User = Depends(deps.get_current_active_user) # Sadece admin yükleyebilsin
+    current_user: User = Depends(deps.get_current_active_user)
 ):
-    # Dosya uzantısını al (örn: .jpg veya .pdf)
-    extension = os.path.splitext(file.filename)[1]
-    # Benzersiz bir dosya adı oluştur
-    unique_filename = f"{uuid.uuid4()}{extension}"
+    """Upload a file to Supabase Storage (for avatars, CVs, etc.)."""
+    from app.core.storage import storage
     
-    file_path = os.path.join("uploads", unique_filename)
+    # Determine folder based on file type
+    extension = file.filename.split(".")[-1].lower() if file.filename else ""
     
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+    if extension == "pdf":
+        folder = "documents"
+        allowed_extensions = ["pdf"]
+    else:
+        folder = "images"
+        allowed_extensions = ["jpg", "jpeg", "png", "webp", "gif"]
     
-    # Erişilebilir URL'i döndür
-    return {"url": f"{settings.BACKEND_URL}/uploads/{unique_filename}"}
+    # Upload to Supabase Storage
+    public_url, file_path = await storage.upload_file(
+        file=file,
+        folder=folder,
+        allowed_extensions=allowed_extensions + ["pdf"]  # Allow both
+    )
+    
+    return {"url": public_url}
     
 # --- Services ---
 @router.get("/services", response_model=List[schemas.schemas.Service])
