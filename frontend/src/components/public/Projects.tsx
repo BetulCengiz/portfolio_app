@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { Github } from 'lucide-react';
 import { api } from '@/utils/api';
 import { useTranslation } from 'react-i18next';
 
@@ -115,7 +116,7 @@ const Projects = ({ initialData }: ProjectProps) => {
                                         {(isEn && project.title_en) ? project.title_en : project.title}
                                     </h3>
                                     <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors p-1.5 hover:bg-white/10 rounded-full" title="Github Repo">
-                                        <span className="material-symbols-outlined !text-[20px]">code</span>
+                                        <Github size={20} />
                                     </a>
                                 </div>
 

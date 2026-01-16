@@ -1,149 +1,145 @@
 "use client";
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 const Services = () => {
-    const { t, i18n } = useTranslation();
-    const isEn = i18n.language === 'en';
+  const { t } = useTranslation();
 
-    const serviceData = [
-        {
-            title: t('services.frontend_title'),
-            description: t('services.frontend_desc'),
-            icon: "desktop_windows",
-            bgIcon: "devices",
-            skills: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Framer Motion"],
-        },
-        {
-            title: t('services.backend_title'),
-            description: t('services.backend_desc'),
-            icon: "database",
-            bgIcon: "dns",
-            skills: ["Node.js", "Python", "FastAPI", "PostgreSQL", "Redis"],
-        },
-        {
-            title: t('services.ai_title'),
-            description: t('services.ai_desc'),
-            icon: "smart_toy",
-            bgIcon: "psychology",
-            skills: ["OpenAI API", "LangChain", "Vector DBs", "RAG"],
-        },
-        {
-            title: t('services.devops_title'),
-            description: t('services.devops_desc'),
-            icon: "construction",
-            bgIcon: "cloud_upload",
-            skills: ["Docker", "AWS", "GitHub Actions", "Vercel", "Linux"],
-        }
-    ];
+  const serviceData = [
+    {
+      title: t("services.genai_title"),
+      description: t("services.genai_desc"),
+      icon: "psychology",
+      bgIcon: "auto_awesome",
+      skills: [
+        "LLMs",
+        "Agentic RAG",
+        "Prompt Engineering",
+        "LangChain",
+        "LlamaIndex",
+        "Vector Databases",
+      ],
+    },
+    {
+      title: t("services.agents_title"),
+      description: t("services.agents_desc"),
+      icon: "smart_toy",
+      bgIcon: "hub",
+      skills: [
+        "ReAct",
+        "Tool-Using Agents",
+        "Workflow Orchestration",
+        "Model Evaluation",
+      ],
+    },
+    {
+      title: t("services.backend_title"),
+      description: t("services.backend_desc"),
+      icon: "database",
+      bgIcon: "dns",
+      skills: [
+        "FastAPI",
+        "Python",
+        "PostgreSQL",
+        "JWT",
+        "REST APIs",
+        "Vector Stores",
+      ],
+    },
+    {
+      title: t("services.frontend_title"),
+      description: t("services.frontend_desc"),
+      icon: "desktop_windows",
+      bgIcon: "devices",
+      skills: [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+      ],
+    },
+  ];
 
-    const techRow1 = [
-        { name: "Python", icon: "terminal", color: "text-yellow-400" },
-        { name: "JavaScript", icon: "javascript", color: "text-yellow-300" },
-        { name: "React", icon: "code_blocks", color: "text-blue-400" },
-        { name: "Next.js", icon: "layers", color: "text-white" },
-        { name: "TypeScript", icon: "data_object", color: "text-blue-500" },
-        { name: "HTML5", icon: "html", color: "text-orange-500" },
-        { name: "Tailwind CSS", icon: "palette", color: "text-sky-400" },
-    ];
+  const techRow1 = [
+    { name: "Python", icon: "terminal", color: "text-yellow-400" },
+    { name: "LLMs", icon: "psychology", color: "text-purple-400" },
+    { name: "LangChain", icon: "account_tree", color: "text-emerald-400" },
+    { name: "LlamaIndex", icon: "schema", color: "text-sky-400" },
+    { name: "FastAPI", icon: "bolt", color: "text-teal-400" },
+    { name: "PostgreSQL", icon: "database", color: "text-blue-300" },
+  ];
 
-    const techRow2 = [
-        { name: "FastAPI", icon: "bolt", color: "text-teal-400", highlight: true },
-        { name: "Node.js", icon: "eco", color: "text-green-500" },
-        { name: "TensorFlow", icon: "neurology", color: "text-orange-400" },
-        { name: "Docker", icon: "deployed_code", color: "text-blue-400" },
-        { name: "Git", icon: "commit", color: "text-red-500" },
-        { name: "PostgreSQL", icon: "database", color: "text-blue-300" },
-        { name: "MongoDB", icon: "forest", color: "text-green-400" },
-        { name: "AWS", icon: "cloud", color: "text-yellow-600" },
-    ];
+  const techRow2 = [
+    { name: "React", icon: "code_blocks", color: "text-blue-400" },
+    { name: "Next.js", icon: "layers", color: "text-white" },
+    { name: "Docker", icon: "deployed_code", color: "text-blue-400", highlight: true },
+    { name: "Git", icon: "commit", color: "text-red-500" },
+    { name: "Linux", icon: "terminal", color: "text-gray-300" },
+    { name: "CI/CD", icon: "sync", color: "text-green-400" },
+  ];
 
-    return (
-        <section id="services" className="animate-section py-24 bg-background relative overflow-hidden">
-            {/* Background Decor */}
-            <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-[10%] left-[-10%] w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
+  return (
+    <section
+      id="services"
+      className="animate-section py-24 bg-background relative overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4">
+            {t("services.badge")}
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
+            {t("services.title")}
+            <span className="text-gradient">
+              {t("services.title_highlight")}
+            </span>
+          </h2>
+          <p className="text-gray-400 text-lg font-light leading-relaxed">
+            {t("services.description")}
+          </p>
+        </div>
 
-            <div className="max-w-7xl mx-auto px-6">
-                {/* Header Section */}
-                <div className="text-center max-w-3xl mx-auto mb-20">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4">
-                        {t('services.badge')}
-                    </div>
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">
-                        {t('services.title')}<span className="text-gradient">{t('services.title_highlight')}</span>
-                    </h2>
-                    <p className="text-gray-400 text-lg font-light leading-relaxed">
-                        {t('services.description')}
-                    </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+          {serviceData.map((service, index) => (
+            <div
+              key={index}
+              className="animate-card glass-panel rounded-3xl p-8 md:p-10 flex flex-col gap-6 group relative overflow-hidden transition-all duration-500 hover:-translate-y-2"
+            >
+              <div className="absolute top-0 right-0 p-6 opacity-[0.04]">
+                <span className="material-symbols-outlined !text-[160px] text-primary select-none">
+                  {service.bgIcon}
+                </span>
+              </div>
+
+              <div className="relative z-10">
+                <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 border border-primary/20">
+                  <span className="material-symbols-outlined !text-4xl text-primary">
+                    {service.icon}
+                  </span>
                 </div>
-
-                {/* Services Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
-                    {serviceData.map((service, index) => (
-                        <div
-                            key={index}
-                            className="animate-card glass-panel rounded-3xl p-8 md:p-10 flex flex-col gap-6 group relative overflow-hidden transition-all duration-500 hover:-translate-y-2"
-                        >
-                            <div className="absolute top-0 right-0 p-6 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500">
-                                <span className="material-symbols-outlined !text-[160px] text-primary select-none">
-                                    {service.bgIcon}
-                                </span>
-                            </div>
-                            <div className="z-10 relative">
-                                <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 border border-primary/20 group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-500">
-                                    <span className="material-symbols-outlined !text-4xl text-primary">{service.icon}</span>
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-primary transition-colors">{service.title}</h3>
-                                <p className="text-gray-400 leading-relaxed mb-8 font-light">{service.description}</p>
-                                <div className="flex flex-wrap gap-2">
-                                    {service.skills.map((skill) => (
-                                        <span key={skill} className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-gray-300 group-hover:border-primary/30 group-hover:text-primary transition-all duration-300">
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
+                <p className="text-gray-400 mb-8 font-light">
+                  {service.description}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {service.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-medium text-gray-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
                 </div>
-
-                {/* Tech Stack Horizontal Scroll */}
-                <div className="relative py-16 overflow-hidden">
-                    {/* Vertical Gradients for fading edges */}
-                    <div className="absolute top-0 left-0 w-32 h-full z-20 bg-gradient-to-r from-background to-transparent pointer-events-none"></div>
-                    <div className="absolute top-0 right-0 w-32 h-full z-20 bg-gradient-to-l from-background to-transparent pointer-events-none"></div>
-
-                    <div className="flex flex-col gap-8 relative z-10">
-                        {/* Row 1: Left Scroll */}
-                        <div className="group flex overflow-hidden select-none w-full mask-gradient">
-                            <div className="flex gap-4 md:gap-6 animate-scroll-left group-hover:[animation-play-state:paused] min-w-full">
-                                {[...techRow1, ...techRow1].map((tech, i) => (
-                                    <div key={i} className="flex h-12 md:h-14 shrink-0 items-center justify-center gap-x-3 rounded-xl bg-white/5 border border-white/10 hover:border-primary hover:bg-primary/10 transition-all duration-300 px-6 backdrop-blur-sm">
-                                        <span className={`material-symbols-outlined ${tech.color} !text-2xl md:!text-3xl`}>{tech.icon}</span>
-                                        <p className="text-white text-base md:text-lg font-medium tracking-wide">{tech.name}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Row 2: Right Scroll */}
-                        <div className="group flex overflow-hidden select-none w-full mask-gradient">
-                            <div className="flex gap-4 md:gap-6 animate-scroll-right group-hover:[animation-play-state:paused] min-w-full">
-                                {[...techRow2, ...techRow2].map((tech, i) => (
-                                    <div key={i} className={`flex h-12 md:h-14 shrink-0 items-center justify-center gap-x-3 rounded-xl ${tech.highlight ? 'bg-primary/20 border-primary/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]' : 'bg-white/5 border-white/10'} hover:border-primary hover:bg-primary/10 transition-all duration-300 px-6 backdrop-blur-sm`}>
-                                        <span className={`material-symbols-outlined ${tech.color} !text-2xl md:!text-3xl`}>{tech.icon}</span>
-                                        <p className="text-white text-base md:text-lg font-medium tracking-wide">{tech.name}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Services;
