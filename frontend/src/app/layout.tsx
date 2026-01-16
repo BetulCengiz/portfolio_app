@@ -30,8 +30,8 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-  title: "Betül - Full Stack Geliştirici Portfolyosu",
-  description: "Modern web teknolojileri ile geliştirilmiş profesyonel portfolyo",
+  title: "Betül Cengiz",
+  description: "Generative AI, Büyük Dil Modelleri, Agentic RAG sistemleri ve üretime hazır yapay zekâ çözümleri geliştiren Yapay Zekâ Mühendisi.",
 };
 
 export default function RootLayout({

@@ -211,7 +211,7 @@ const Hero = ({ initialData }: { initialData?: any }) => {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60 z-10 transition-opacity duration-500 group-hover:opacity-40 "></div>
               <div
                 className="w-full h-full rounded-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-20"
-                style={{ backgroundImage: `url("${initialData?.profile_image || "/profil4.png"}")` }}
+                style={{ backgroundImage: `url("${initialData?.profile_image || "/profil.png"}")` }}
               />
             </div>
           </div>

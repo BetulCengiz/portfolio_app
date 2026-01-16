@@ -69,19 +69,25 @@
         "footer": "© 2024 Portfolyo. Tüm hakları saklıdır."
     },
     "services": {
-        "badge": "Uzmanlık Alanlarım",
-        "title": "Servisler & ",
-        "title_highlight": "Yetenekler",
-        "description": "Modern bir teknoloji yığını ile sağlam, ölçeklenebilir ve duyarlı uygulamalar inşa ediyorum.",
-        "frontend_title": "Frontend Geliştirme",
-        "frontend_desc": "Duyarlı, erişilebilir ve kusursuz kullanıcı arayüzleri tasarlıyorum. Modern bileşen tabanlı mimariler ile akıcı deneyimler oluşturuyorum.",
-        "backend_title": "Backend Geliştirme",
-        "backend_desc": "Sağlam RESTful ve GraphQL API'leri tasarlıyorum. Ölçeklenebilir sunucu mantığı kuruyor ve veritabanı sorgularını optimize ediyorum.",
-        "ai_title": "Yapay Zeka Entegrasyonu",
-        "ai_desc": "Büyük Dil Modelleri (LLM) ve akıllı ajanları uygulamalara entegre ederek otomasyon ve akıllı özellikler geliştiriyorum.",
-        "devops_title": "DevOps & Bulut Mimari",
-        "devops_desc": "CI/CD süreçleri ve konteynerizasyon ile dağıtım döngüsünü hızlandırıyorum. Uygulamaların bulutta ölçeklenmesini sağlıyorum."
-    },
+    "badge": "Neler Yapıyorum",
+    "title": "Yapay Zekâ ",
+    "title_highlight": "Odaklı Çözümler",
+    "description": "Gerçek dünyada kullanılabilir, ölçeklenebilir ve üretime hazır yapay zekâ sistemleri tasarlıyor ve geliştiriyorum.",
+
+    "genai_title": "Generative AI & LLM Sistemleri",
+    "genai_desc": "Alan-özel veriler üzerinde çalışan LLM çözümleri, Agentic RAG mimarileri ve güvenilir AI pipeline’ları geliştiriyorum.",
+
+    "agents_title": "AI Agent’lar & Akıllı Otomasyon",
+    "agents_desc": "Araç kullanabilen, çok adımlı akıl yürütebilen ve iş akışlarını otonom yöneten yapay zekâ agent’ları geliştiriyorum.",
+
+    "backend_title": "AI Backend & API Geliştirme",
+    "backend_desc": "Yapay zekâ sistemlerini destekleyen ölçeklenebilir backend servisleri ve güvenli API’ler tasarlıyorum.",
+
+    "frontend_title": "AI Odaklı Arayüz Geliştirme",
+    "frontend_desc": "Karmaşık yapay zekâ sistemlerini kullanıcıya sezgisel şekilde sunan modern arayüzler geliştiriyorum."
+  }
+
+,
     "common": {
         "loading": "Yükleniyor...",
         "error": "Bir hata oluştu",

@@ -69,19 +69,25 @@
         "footer": "© 2024 Portfolio. All rights reserved."
     },
     "services": {
-        "badge": "Areas of Expertise",
-        "title": "Services & ",
-        "title_highlight": "Skills",
-        "description": "Building robust, scalable, and responsive applications with a modern technology stack.",
-        "frontend_title": "Frontend Development",
-        "frontend_desc": "I design responsive, accessible and seamless user interfaces. I create fluid experiences with modern component-based architectures.",
-        "backend_title": "Backend Development",
-        "backend_desc": "I design robust RESTful and GraphQL APIs. I build scalable server logic and optimize database queries.",
-        "ai_title": "AI Integration",
-        "ai_desc": "I develop automation and smart features by integrating Large Language Models (LLM) and intelligent agents into applications.",
-        "devops_title": "DevOps & Cloud Architecture",
-        "devops_desc": "I accelerate the deployment cycle with CI/CD processes and containerization. I ensure applications scale in the cloud."
-    },
+    "badge": "What I Do",
+    "title": "AI-Centered ",
+    "title_highlight": "Solutions",
+    "description": "I design and build production-ready AI systems, focusing on Generative AI, intelligent agents, and scalable architectures.",
+
+    "genai_title": "Generative AI & LLM Systems",
+    "genai_desc": "I build domain-specific LLM solutions, Agentic RAG architectures, and reliable AI pipelines designed for real-world applications.",
+
+    "agents_title": "AI Agents & Intelligent Automation",
+    "agents_desc": "I develop autonomous AI agents capable of tool usage, multi-step reasoning, and workflow orchestration for complex tasks.",
+
+    "backend_title": "AI Backend & API Engineering",
+    "backend_desc": "I design scalable backend services and APIs that power AI systems, ensuring secure data flow and efficient model integration.",
+
+    "frontend_title": "AI-Focused Frontend Interfaces",
+    "frontend_desc": "I create modern, interactive interfaces that translate complex AI systems into intuitive user experiences."
+  }
+
+,
     "common": {
         "loading": "Loading...",
         "error": "An error occurred",
