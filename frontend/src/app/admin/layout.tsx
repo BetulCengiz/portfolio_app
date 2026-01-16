@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Sidebar from '@/components/admin/Sidebar';
 
 export default function AdminLayout({
@@ -11,6 +11,26 @@ export default function AdminLayout({
 }) {
     const pathname = usePathname();
     const isLoginPage = pathname === '/admin/login';
+
+    const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        if (!isLoginPage) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                router.push('/admin/login');
+            } else {
+                setIsLoading(false);
+            }
+        } else {
+            setIsLoading(false);
+        }
+    }, [isLoginPage, router]);
+
+    if (isLoading) {
+        return null; // veya bir loading spinner
+    }
 
     if (isLoginPage) {
         return <>{children}</>;
