@@ -89,7 +89,7 @@ const Contact = () => {
                                 <div className="animate-fade-in-up animation-delay-500 flex gap-8 pt-2 px-4 justify-center lg:justify-start">
                                     <a href="https://www.linkedin.com/in/betulcengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115 "><Linkedin size={28} /></a>
                                     <a href="https://github.com/BetulCengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Github size={28} /></a>
-                                    <a href="https://www.instagram.com/betul_cengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Instagram size={28} /></a>
+                                    <a href="https://www.instagram.com/codebybety" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Instagram size={28} /></a>
                                     <a href="https://www.youtube.com/c/BetülCengiz" className="text-white hover:text-pink-800 transition-transform hover:scale-115"><Youtube size={28} /></a>
                                 </div>
                             </div>
