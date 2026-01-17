@@ -2,6 +2,76 @@
 
 import React, { useState, useEffect } from 'react';
 import { api } from '@/utils/api';
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    DragEndEvent
+} from '@dnd-kit/core';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+    useSortable
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+// Sortable Blog Post Component
+function SortableBlogPost({ post, handleOpenModal, handleDelete }: { post: any, handleOpenModal: any, handleDelete: any }) {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging
+    } = useSortable({ id: post.id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        zIndex: isDragging ? 50 : 1,
+        position: isDragging ? 'relative' as 'relative' : undefined,
+    };
+
+    return (
+        <div
+            ref={setNodeRef}
+            style={style}
+            className={`bg-admin-surface p-6 rounded-xl border border-admin-border flex justify-between items-center hover:bg-white/5 transition-colors group ${isDragging ? 'shadow-2xl border-admin-primary bg-admin-surface-light opacity-80' : ''}`}
+        >
+            <div className="flex items-center gap-4 flex-1">
+                <div {...attributes} {...listeners} className="cursor-grab hover:text-admin-primary text-admin-muted p-1">
+                    <span className="material-symbols-outlined">drag_indicator</span>
+                </div>
+                <div>
+                    <h3 className="text-white text-xl font-bold group-hover:text-admin-primary transition-colors flex items-center gap-2">
+                        {post.title}
+                        {post.external_url && <span className="material-symbols-outlined text-sm text-admin-muted" title="Dış Bağlantı">open_in_new</span>}
+                    </h3>
+                    <p className="text-admin-muted text-sm mt-1">{post.slug}</p>
+                </div>
+            </div>
+            <div className="flex items-center gap-4">
+                <span className={`px-3 py-1 rounded-full text-xs font-bold ${post.is_published ? 'bg-emerald-500/10 text-emerald-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
+                    {post.is_published ? 'Yayında' : 'Taslak'}
+                </span>
+                <div className="flex gap-2">
+                    <button onClick={() => handleOpenModal(post)} className="p-2 rounded-lg bg-admin-bg hover:bg-admin-primary hover:text-white text-admin-muted transition-colors">
+                        <span className="material-symbols-outlined">edit</span>
+                    </button>
+                    <button onClick={() => handleDelete(post.id)} className="p-2 rounded-lg bg-admin-bg hover:bg-red-500/20 hover:text-red-400 text-admin-muted transition-colors">
+                        <span className="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function BlogManagement() {
     const [posts, setPosts] = useState<any[]>([]);
@@ -9,6 +79,13 @@ export default function BlogManagement() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState<any>(null); // For editing
     const [formData, setFormData] = useState({ title: '', title_en: '', slug: '', content: '', content_en: '', image_url: '', external_url: '', is_published: false });
+
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
     useEffect(() => {
         fetchPosts();
@@ -74,6 +151,27 @@ export default function BlogManagement() {
         }
     };
 
+    const handleDragEnd = async (event: DragEndEvent) => {
+        const { active, over } = event;
+
+        if (active.id !== over?.id) {
+            const oldIndex = posts.findIndex((item) => item.id === active.id);
+            const newIndex = posts.findIndex((item) => item.id === over?.id);
+            const newPosts = arrayMove(posts, oldIndex, newIndex);
+
+            setPosts(newPosts);
+
+            try {
+                const orderedIds = newPosts.map(post => post.id);
+                await api.reorderBlogPosts(orderedIds);
+            } catch (error) {
+                console.error("Sıralama güncellenemedi:", error);
+                // Fallback: fetch original order
+                fetchPosts();
+            }
+        }
+    };
+
     return (
         <div className="flex-1 p-6 lg:p-10 max-w-7xl mx-auto w-full flex flex-col gap-8 relative">
             <div className="flex flex-wrap items-end justify-between gap-6 pb-6 border-b border-admin-border">
@@ -101,32 +199,27 @@ export default function BlogManagement() {
                     <p className="text-admin-muted max-w-md">İlk blog yazınızı ekleyerek deneyimlerinizi paylaşmaya başlayın.</p>
                 </div>
             ) : (
-                <div className="grid gap-6">
-                    {posts.map((post) => (
-                        <div key={post.id} className="bg-admin-surface p-6 rounded-xl border border-admin-border flex justify-between items-center hover:bg-white/5 transition-colors group">
-                            <div>
-                                <h3 className="text-white text-xl font-bold group-hover:text-admin-primary transition-colors flex items-center gap-2">
-                                    {post.title}
-                                    {post.external_url && <span className="material-symbols-outlined text-sm text-admin-muted" title="Dış Bağlantı">open_in_new</span>}
-                                </h3>
-                                <p className="text-admin-muted text-sm mt-1">{post.slug}</p>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <span className={`px-3 py-1 rounded-full text-xs font-bold ${post.is_published ? 'bg-emerald-500/10 text-emerald-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
-                                    {post.is_published ? 'Yayında' : 'Taslak'}
-                                </span>
-                                <div className="flex gap-2">
-                                    <button onClick={() => handleOpenModal(post)} className="p-2 rounded-lg bg-admin-bg hover:bg-admin-primary hover:text-white text-admin-muted transition-colors">
-                                        <span className="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button onClick={() => handleDelete(post.id)} className="p-2 rounded-lg bg-admin-bg hover:bg-red-500/20 hover:text-red-400 text-admin-muted transition-colors">
-                                        <span className="material-symbols-outlined">delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
+                >
+                    <div className="grid gap-6">
+                        <SortableContext
+                            items={posts.map(p => p.id)}
+                            strategy={verticalListSortingStrategy}
+                        >
+                            {posts.map((post) => (
+                                <SortableBlogPost
+                                    key={post.id}
+                                    post={post}
+                                    handleOpenModal={handleOpenModal}
+                                    handleDelete={handleDelete}
+                                />
+                            ))}
+                        </SortableContext>
+                    </div>
+                </DndContext>
             )}
 
             {/* Modal */}

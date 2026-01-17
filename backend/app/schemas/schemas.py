@@ -132,6 +132,7 @@ class BlogPostBase(BaseModel):
     external_url: Optional[str] = None
     tags: List[str] = []
     is_published: bool = False
+    order: int = 0
 
 class BlogPostCreate(BlogPostBase):
     pass
@@ -146,6 +147,7 @@ class BlogPostUpdate(BaseModel):
     external_url: Optional[str] = None
     tags: Optional[List[str]] = None
     is_published: Optional[bool] = None
+    order: Optional[int] = None
 
 class BlogPost(BlogPostBase):
     id: int

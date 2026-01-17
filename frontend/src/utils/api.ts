@@ -362,6 +362,25 @@ export const api = {
         return response.json();
     },
 
+    async reorderBlogPosts(orderedIds: number[]) {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/resources/blog/reorder`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(orderedIds),
+        });
+
+        if (!response.ok) {
+            throw new Error('Sıralama güncellenemedi');
+        }
+
+        return response.json();
+    },
+
     // Resources Delete/Update helpers if missing
     async deleteTimeline(id: number) {
         const token = localStorage.getItem('token');

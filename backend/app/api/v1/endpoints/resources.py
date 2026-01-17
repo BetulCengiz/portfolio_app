@@ -1,5 +1,5 @@
 from typing import Any, List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 from app import crud, schemas
 from app.api import deps
@@ -8,7 +8,7 @@ import shutil
 import os
 import uuid # Dosya isimlerinin çakışmaması için
 # Modelleri doğrudan dosyadan import ederek 'models.models' hatasını çözüyoruz
-from app.models.models import About, TimelineItem, User 
+from app.models.models import About, TimelineItem, User, BlogPost
 from app.core.config import settings 
 
 router = APIRouter()
@@ -153,7 +153,24 @@ def update_message(
 # --- Blog ---
 @router.get("/blog", response_model=List[schemas.schemas.BlogPost])
 def read_blog_posts(db: Session = Depends(deps.get_db)) -> Any:
-    return crud.blog.get_multi(db)
+    return db.query(BlogPost).order_by(BlogPost.order.asc()).all()
+
+@router.post("/blog/reorder", response_model=List[schemas.schemas.BlogPost])
+def reorder_blog_posts(
+    *,
+    db: Session = Depends(deps.get_db),
+    ordered_ids: List[int] = Body(...),
+    current_user: User = Depends(deps.get_current_active_user),
+) -> Any:
+    """Updates the order of blog posts based on the provided list of IDs."""
+    posts = []
+    for index, post_id in enumerate(ordered_ids):
+        post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
+        if post:
+            post.order = index
+            posts.append(post)
+    db.commit()
+    return posts
 
 @router.post("/blog", response_model=schemas.schemas.BlogPost)
 def create_blog_post(
